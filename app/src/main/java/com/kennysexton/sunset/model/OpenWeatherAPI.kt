@@ -1,18 +1,20 @@
 package com.kennysexton.sunset.model
 
-import retrofit2.http.GET
+import com.kennysexton.sunset.BuildConfig
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface OpenWeatherAPI {
 
-    @GET("volley_array.json")
-    fun getMovies() : Call<List<Movie>>
+    @GET("weather?q=Philadelphia")
+    fun getMovies(@Query("appid") api_key: String) : Call<List<Movie>>
 
     companion object {
 
-        private var BASE_URL = "http://velmm.com/apis/"
+        private var BASE_URL = "https://api.openweathermap.org/data/2.5/"
 
         fun create() : OpenWeatherAPI {
 

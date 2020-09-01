@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 //        }
 
         Log.d("test", "test")
-        val apiInterface = OpenWeatherAPI.create().getMovies()
+        val apiInterface = OpenWeatherAPI.create().getMovies(BuildConfig.OPEN_WEATHER_KEY)
         val items : ArrayList<String> = ArrayList()
         items.add("list1")
         items.add("list2")
@@ -42,17 +42,17 @@ class MainActivity : AppCompatActivity() {
         Log.d("test", items.toString())
 
 
-//        apiInterface.enqueue( object : Callback<List<Movie>> {
-//            override fun onResponse(call: Call<List<Movie>>?, response: Response<List<Movie>>?) {
-//
-//                if(response?.body() != null)
-//                    recyclerAdapter.setMovieListItems(response.body()!!)
-//            }
-//
-//            override fun onFailure(call: Call<List<Movie>>?, t: Throwable?) {
-//
-//            }
-//        })
+        apiInterface.enqueue( object : Callback<List<Movie>> {
+            override fun onResponse(call: Call<List<Movie>>?, response: Response<List<Movie>>?) {
+
+                if(response?.body() != null)
+                    Log.d("test", response.body()!!.toString())
+            }
+
+            override fun onFailure(call: Call<List<Movie>>?, t: Throwable?) {
+                Log.e("test", t.toString())
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
