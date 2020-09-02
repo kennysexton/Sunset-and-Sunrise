@@ -1,4 +1,6 @@
 package com.kennysexton.sunset.model
 
 
-data class Movie(var title: String, var image: String)
+data class WeatherResponse(var coord: Coord, var name: String)  //var weather: String, var main: String
+
+data class Coord(var lat: String, var lon: String)

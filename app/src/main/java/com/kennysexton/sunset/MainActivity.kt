@@ -7,8 +7,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.kennysexton.sunset.model.Movie
 import com.kennysexton.sunset.model.OpenWeatherAPI
+import com.kennysexton.sunset.model.WeatherResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
 //                    .setAction("Action", null).show()
 //        }
 
-        Timber.d("test")
         val apiInterface = OpenWeatherAPI.create().getMovies(BuildConfig.OPEN_WEATHER_KEY)
         val items: ArrayList<String> = ArrayList()
         items.add("list1")
@@ -45,16 +44,20 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = recyclerAdapter
         Timber.d(items.toString())
 
-
-        apiInterface.enqueue(object : Callback<List<Movie>> {
-            override fun onResponse(call: Call<List<Movie>>?, response: Response<List<Movie>>?) {
+        apiInterface.enqueue(object : Callback<WeatherResponse> {
+            override fun onResponse(call: Call<WeatherResponse>?, response: Response<WeatherResponse>?) {
 
                 if (response?.body() != null)
                     Timber.d(response.body()!!.toString())
+                if (response != null) {
+                    items.add(response.body()!!.name)
+                    recyclerAdapter.notifyDataSetChanged()
+                }
             }
 
-            override fun onFailure(call: Call<List<Movie>>?, t: Throwable?) {
-                Timber.e(t.toString())
+
+            override fun onFailure(call: Call<WeatherResponse>?, t: Throwable?) {
+                Timber.e("response failure:  $t")
             }
         })
     }
