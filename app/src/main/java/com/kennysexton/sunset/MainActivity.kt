@@ -34,9 +34,7 @@ class MainActivity : AppCompatActivity() {
 //        }
 
         val apiInterface = OpenWeatherAPI.create().getMovies(BuildConfig.OPEN_WEATHER_KEY)
-        val items: ArrayList<String> = ArrayList()
-        items.add("list1")
-        items.add("list2")
+        val items: ArrayList<WeatherResponse> = ArrayList()
 
         recyclerView = findViewById(R.id.recycler)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -47,10 +45,9 @@ class MainActivity : AppCompatActivity() {
         apiInterface.enqueue(object : Callback<WeatherResponse> {
             override fun onResponse(call: Call<WeatherResponse>?, response: Response<WeatherResponse>?) {
 
-                if (response?.body() != null)
+                if (response?.body() != null) {
                     Timber.d(response.body()!!.toString())
-                if (response != null) {
-                    items.add(response.body()!!.name)
+                    response.body()?.let { items.add(it) }
                     recyclerAdapter.notifyDataSetChanged()
                 }
             }
