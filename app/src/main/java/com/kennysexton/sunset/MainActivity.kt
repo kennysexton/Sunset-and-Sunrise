@@ -1,7 +1,6 @@
 package com.kennysexton.sunset
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 //                    .setAction("Action", null).show()
 //        }
 
-        val apiInterface = OpenWeatherAPI.create().getMovies(BuildConfig.OPEN_WEATHER_KEY)
+        val apiInterface = OpenWeatherAPI.create().getCurrentWeather(BuildConfig.OPEN_WEATHER_KEY, "imperial") //TODO move imperial to shared preferences
         val items: ArrayList<WeatherResponse> = ArrayList()
 
         recyclerView = findViewById(R.id.recycler)

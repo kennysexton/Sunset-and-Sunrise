@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface OpenWeatherAPI {
 
     @GET("weather?q=Philadelphia")
-    fun getMovies(@Query("appid") api_key: String) : Call<WeatherResponse>
+    fun getCurrentWeather(@Query("appid") api_key: String, @Query("units") units: String): Call<WeatherResponse>
 
     companion object {
 
