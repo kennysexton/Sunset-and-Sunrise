@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/weatherDescription"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Philadelphia" />
@@ -33,6 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="26sp"
+        android:textFontWeight="600"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/weatherIcon"
         app:layout_constraintStart_toEndOf="@+id/location"
