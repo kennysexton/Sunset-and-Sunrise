@@ -6,6 +6,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.kennysexton.sunset.model.OpenWeatherAPI
 import com.kennysexton.sunset.model.WeatherResponse
 import retrofit2.Call
@@ -27,10 +29,10 @@ class MainActivity : AppCompatActivity() {
         }
         setContentView(R.layout.activity_main)
 
-//        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-//            Snackbar.make(view, "Add a new location", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show()
-//        }
+        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
+            Snackbar.make(view, "Add a new location", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
+        }
 
         val apiInterface = OpenWeatherAPI.create().getCurrentWeather(BuildConfig.OPEN_WEATHER_KEY, "imperial") //TODO move imperial to shared preferences
         val items: ArrayList<WeatherResponse> = ArrayList()
