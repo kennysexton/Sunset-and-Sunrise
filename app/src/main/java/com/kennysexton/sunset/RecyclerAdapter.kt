@@ -33,7 +33,7 @@ class RecyclerAdapter(private val items : ArrayList<WeatherResponse>, private va
         Timber.d("Loading icon from path: $iconPath")
 
         holder.location.text = items[position].name
-        holder.weatherDescription.text = items[position].weather[0].description
+//        holder.weatherDescription.text = items[position].weather[0].description
 
         holder.temperature.text = items[position].main.temp.roundToInt().toString()
         Picasso.get().load(iconPath).into(holder.weatherIcon , object : Callback {
@@ -51,7 +51,7 @@ class RecyclerAdapter(private val items : ArrayList<WeatherResponse>, private va
 
 class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     val location: TextView = view.location
-    val weatherDescription: TextView = view.weatherDescription
+//    val weatherDescription: TextView = view.weatherDescription
     val temperature: TextView = view.temperature
     val weatherIcon: ImageView = view.weatherIcon
 
