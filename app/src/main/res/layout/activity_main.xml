@@ -18,7 +18,7 @@
         app:backgroundTint="@color/colorPrimary" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
+        android:id="@+id/locationsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:itemCount="6"
