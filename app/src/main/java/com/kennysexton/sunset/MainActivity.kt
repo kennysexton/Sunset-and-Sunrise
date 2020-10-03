@@ -24,9 +24,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerAdapter: RecyclerAdapter
+    private lateinit var swipeBackground : ColorDrawable
 
-    // Color behind the rows of our recycle view
-    private var swipeBackground: ColorDrawable = ColorDrawable(Color.parseColor("#F24D4D"))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // FOB
+        //TODO make snackbar and FOB the same color
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
             Snackbar.make(view, "Add a new location", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
@@ -45,6 +45,9 @@ class MainActivity : AppCompatActivity() {
 
         // Recycler init
         recyclerView = findViewById(R.id.locationsList)
+
+        // Color behind the rows of our recycle view
+        swipeBackground =  ColorDrawable(ContextCompat.getColor(this, R.color.colorNegative))
 
         val apiInterface = OpenWeatherAPI.create().getCurrentWeather(
             BuildConfig.OPEN_WEATHER_KEY,
