@@ -1,7 +1,8 @@
 package com.kennysexton.sunset
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
@@ -20,11 +21,13 @@ import retrofit2.Callback
 import retrofit2.Response
 import timber.log.Timber
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerAdapter: RecyclerAdapter
-    private lateinit var swipeBackground : ColorDrawable
+    private lateinit var swipeBackground: ColorDrawable
+    private lateinit var sharedpreferences: SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,31 +40,36 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // FOB
-        //TODO make snackbar and FOB the same color
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-            Snackbar.make(view, "Add a new location", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            val snackbar = Snackbar.make(view, "Add a new location", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+            snackbar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            snackbar.show()
         }
 
         // Recycler init
         recyclerView = findViewById(R.id.locationsList)
 
         // Color behind the rows of our recycle view
-        swipeBackground =  ColorDrawable(ContextCompat.getColor(this, R.color.colorNegative))
+        swipeBackground = ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimary))
+
+
 
         val apiInterface = OpenWeatherAPI.create().getCurrentWeather(
             BuildConfig.OPEN_WEATHER_KEY,
             "imperial"
         ) //TODO move imperial to shared preferences
-        val items: ArrayList<WeatherResponse> = ArrayList()
 
+        //TODO use shared preferences for storing a list of locations
+//        getStoredLocationList()
+
+        val items: ArrayList<WeatherResponse> = ArrayList()
 
         apiInterface.enqueue(object : Callback<WeatherResponse> {
             override fun onResponse(
                 call: Call<WeatherResponse>?,
                 response: Response<WeatherResponse>?
             ) {
-
                 if (response?.body() != null) {
                     Timber.d(response.body()!!.toString())
                     response.body()?.let { items.add(it) }
@@ -92,20 +100,29 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun getStoredLocationList(){
+        // Shared preferences
+        sharedpreferences = getSharedPreferences(
+            getString(R.string.LOCATIONSKEY),
+            Context.MODE_PRIVATE
+        )
+
+        var locations: MutableSet<String> =
+            sharedpreferences.getStringSet(getString(R.string.LOCATIONSKEY), null) as MutableSet<String>
+    }
     /**
      * Populates the recyclerView from Earthquake List
-     * @param List of Earthquakes
      */
     private fun showData(items: ArrayList<WeatherResponse>) {
-            recyclerView.apply {
-                recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
-                recyclerAdapter = RecyclerAdapter(items, this@MainActivity)
-                recyclerView.adapter = recyclerAdapter
-                Timber.d(items.toString())
+        recyclerView.apply {
+            recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+            recyclerAdapter = RecyclerAdapter(items, this@MainActivity)
+            recyclerView.adapter = recyclerAdapter
+            Timber.d(items.toString())
 
             // Initialize Delete Icon
             val deleteIcon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_trash)!!
-
 
             // Swipe to delete
             val itemTouchHelperCallback = object :
@@ -179,7 +196,6 @@ class MainActivity : AppCompatActivity() {
                             rowRectangle.bottom - iconMargin
                         )
                     }
-
 
                     // Draw the red background
                     swipeBackground.draw(c)

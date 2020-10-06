@@ -4,4 +4,7 @@
 
     <string name="weatherDegrees">%d°</string>
     <string name="weatherIconAlt">current weather</string>
+
+    // Share Preferences
+    <string name="LOCATIONSKEY">LOCATIONS</string>
 </resources>
