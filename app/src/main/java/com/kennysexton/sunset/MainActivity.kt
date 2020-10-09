@@ -1,5 +1,6 @@
 package com.kennysexton.sunset
 
+
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Canvas
@@ -9,13 +10,17 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import com.kennysexton.sunset._KotlinExtensions.replaceFragment
 import com.kennysexton.sunset.model.OpenWeatherAPI
 import com.kennysexton.sunset.model.WeatherResponse
+import com.kennysexton.sunset.search.SearchFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,6 +50,14 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null)
             snackbar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
             snackbar.show()
+
+            supportFragmentManager.replaceFragment(
+                SearchFragment.TAG,
+                R.id.main_fragment,
+                true
+            ) {
+                SearchFragment.newInstance()
+            }
         }
 
         // Recycler init
@@ -53,6 +66,13 @@ class MainActivity : AppCompatActivity() {
         // Color behind the rows of our recycle view
         swipeBackground = ColorDrawable(ContextCompat.getColor(this, R.color.colorPrimary))
 
+        // Shared preferences
+        sharedpreferences = getSharedPreferences(
+            getString(R.string.LOCATIONSKEY),
+            Context.MODE_PRIVATE
+        )
+
+        getStoredLocationList()
 
 
         val apiInterface = OpenWeatherAPI.create().getCurrentWeather(
@@ -60,10 +80,8 @@ class MainActivity : AppCompatActivity() {
             "imperial"
         ) //TODO move imperial to shared preferences
 
-        //TODO use shared preferences for storing a list of locations
-//        getStoredLocationList()
 
-        val items: ArrayList<WeatherResponse> = ArrayList()
+        val weatherResponseList: ArrayList<WeatherResponse> = ArrayList()
 
         apiInterface.enqueue(object : Callback<WeatherResponse> {
             override fun onResponse(
@@ -71,9 +89,9 @@ class MainActivity : AppCompatActivity() {
                 response: Response<WeatherResponse>?
             ) {
                 if (response?.body() != null) {
-                    Timber.d(response.body()!!.toString())
-                    response.body()?.let { items.add(it) }
-                    showData(items)
+                    Timber.d("response success: ${response.body()}")
+                    response.body()?.let { weatherResponseList.add(it) }
+                    showData(weatherResponseList)
                 }
             }
 
@@ -100,17 +118,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun getStoredLocationList(): MutableSet<String?>? {
 
-    private fun getStoredLocationList(){
-        // Shared preferences
-        sharedpreferences = getSharedPreferences(
-            getString(R.string.LOCATIONSKEY),
-            Context.MODE_PRIVATE
-        )
+        val locations: MutableSet<String?>? =
+            sharedpreferences.getStringSet(getString(R.string.LOCATIONSKEY), null) as MutableSet<String?>?
 
-        var locations: MutableSet<String> =
-            sharedpreferences.getStringSet(getString(R.string.LOCATIONSKEY), null) as MutableSet<String>
+        Timber.d("Returned a set of size: ${locations?.size} from sharedpreferences")
+        return locations
     }
+
     /**
      * Populates the recyclerView from Earthquake List
      */
