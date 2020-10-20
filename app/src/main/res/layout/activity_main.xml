@@ -11,7 +11,7 @@
         android:id="@+id/main_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:animateLayoutChanges="true"/>
+        android:animateLayoutChanges="true">
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic__add"
+        android:src="@drawable/ic_add"
         app:backgroundTint="@color/colorPrimary" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -29,5 +29,7 @@
         android:layout_height="match_parent"
         tools:itemCount="6"
         tools:listitem="@layout/item_row" />
+
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -5,14 +5,10 @@ import androidx.fragment.app.FragmentManager
 
 object _KotlinExtensions {
 
-    fun FragmentManager.replaceFragment(tag: String,
-    fragmentContainerId: Int,
-    addToBackstack: Boolean,
-    fragmentCreator: () -> Fragment
-    ){
+    fun FragmentManager.replaceFragment(tag: String, fragmentContainerId: Int, addToBackstack: Boolean, fragmentCreator: () -> Fragment) {
 
         var fragment = this.findFragmentByTag(tag)
-        if (fragment == null){
+        if (fragment == null) {
             fragment = fragmentCreator()
         }
 
@@ -20,7 +16,7 @@ object _KotlinExtensions {
         val transaction = this.beginTransaction().setPrimaryNavigationFragment(fragment)
         transaction.replace(fragmentContainerId, fragment, tag)
 
-        if(addToBackstack) {
+        if (addToBackstack) {
             transaction.addToBackStack(tag)
         }
 

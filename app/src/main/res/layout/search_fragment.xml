@@ -3,15 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".search.SearchFragment"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorPrimary"
+    tools:context=".search.SearchFragment">
 
     <SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:tint="#FFF"
-        android:queryHint="@color/white"
-        android:queryBackground="@color/white"
-        android:outlineAmbientShadowColor="#FFF"/>
+        android:background="@color/colorStatusBar"
+        android:icon="@drawable/ic_add"
+        android:queryHint="@string/search_hint"
+        android:textColorPrimary="@color/white" />
 
 </FrameLayout>

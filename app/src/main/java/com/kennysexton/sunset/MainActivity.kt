@@ -121,7 +121,10 @@ class MainActivity : AppCompatActivity() {
     private fun getStoredLocationList(): MutableSet<String?>? {
 
         val locations: MutableSet<String?>? =
-            sharedpreferences.getStringSet(getString(R.string.LOCATIONSKEY), null) as MutableSet<String?>?
+            sharedpreferences.getStringSet(
+                getString(R.string.LOCATIONSKEY),
+                null
+            ) as MutableSet<String?>?
 
         Timber.d("Returned a set of size: ${locations?.size} from sharedpreferences")
         return locations

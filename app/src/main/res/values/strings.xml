@@ -7,4 +7,5 @@
 
     // Share Preferences
     <string name="LOCATIONSKEY">LOCATIONS</string>
+    <string name="search_hint">Enter a city</string>
 </resources>
