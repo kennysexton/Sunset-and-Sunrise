@@ -12,7 +12,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.kennysexton.sunset.model.WeatherResponse
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_row.view.*
 import timber.log.Timber
 import kotlin.math.roundToInt
 
@@ -79,10 +78,10 @@ class RecyclerAdapter(private val items : ArrayList<WeatherResponse>, private va
     }
 
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-        val location: TextView = view.location
+        val location: TextView = view.findViewById<TextView>(R.id.location)
         //    val weatherDescription: TextView = view.weatherDescription
-        val temperature: TextView = view.temperature
-        val weatherIcon: ImageView = view.weatherIcon
+        val temperature: TextView = view.findViewById<TextView>(R.id.temperature)
+        val weatherIcon: ImageView = view.findViewById<ImageView>(R.id.weatherIcon)
     }
 
 
