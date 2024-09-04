@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.kennysexton.sunset.ui.theme.SunriseSunsetTheme
-import com.kennysexton.sunset.ui.theme.components.WeatherLandingScreen
+import com.kennysexton.sunset.ui.components.WeatherLandingScreen
 
 class MainActivity : ComponentActivity() {
     private val mainViewModel by viewModels<MainViewModel>()
