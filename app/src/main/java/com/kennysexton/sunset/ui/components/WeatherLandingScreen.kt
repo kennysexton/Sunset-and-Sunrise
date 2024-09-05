@@ -1,10 +1,11 @@
 package com.kennysexton.sunset.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScopeInstance.align
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,8 +14,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
 import com.kennysexton.sunset.model.Coord
 import com.kennysexton.sunset.model.Main
@@ -25,16 +28,28 @@ import kotlin.math.roundToInt
 
 @Composable
 fun WeatherLandingScreen(innerPadding: PaddingValues, weatherList: List<WeatherResponse>) {
-    LazyColumn {
-        items(weatherList) { location ->
-            WeatherListItem(
-                weather = location,
-                modifier = Modifier.padding(innerPadding)
-            )
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .padding(innerPadding))
+    {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(weatherList) { location ->
+                WeatherListItem(
+                    weather = location,
+                )
+            }
         }
-    }
-    BlueButton(onClick = { /*TODO*/ }, modifier = Modifier.align(Alignment.BottomEnd).padding(innerPadding)) {
-        Text(text = "Add Location")
+
+        BlueButton(
+            onClick = { /*TODO*/ },
+            modifier = Modifier
+                .padding(innerPadding)
+                .align(Alignment.BottomEnd)
+        ) {
+            Text(text = "Add Location")
+        }
+
+
     }
 }
 
@@ -71,7 +86,6 @@ fun WeatherListItem(weather: WeatherResponse, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun WeatherListItemPreview() {
-
     val sampleWeatherList = listOf(
         WeatherResponse(
             coord = Coord("39.9523", "-75.1638"),
