@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.kennysexton.sunset.ui.theme.HappyFisherGradientEnd
 import com.kennysexton.sunset.ui.theme.HappyFisherGradientStart
 
@@ -30,7 +31,7 @@ fun DefaultButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    shape: Shape = RoundedCornerShape(6.dp),
+    shape: Shape = RoundedCornerShape(8.dp),
     colors: ButtonColors
     = ButtonDefaults.buttonColors(),
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
@@ -75,7 +76,7 @@ fun BlueButton(
         // Custom styling, but also supports modifiers added at the caller
         modifier = modifier.then(
             Modifier
-                .padding(16.dp)
+                .padding(18.dp)
                 .clip(shape = RoundedCornerShape(8.dp))
                 .shadow(elevation = 8.dp)
                 .background(
@@ -94,6 +95,6 @@ fun BlueButton(
 @Composable
 fun BlueButtonPreview() {
     BlueButton(onClick = {}) {
-        Text(text = "Blue button")
+        Text(text = "Blue button", fontSize = 18.sp)
     }
 }
