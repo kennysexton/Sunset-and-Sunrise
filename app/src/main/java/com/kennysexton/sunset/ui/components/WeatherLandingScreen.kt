@@ -2,6 +2,7 @@ package com.kennysexton.sunset.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScopeInstance.align
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,6 +21,7 @@ import com.kennysexton.sunset.model.Main
 import com.kennysexton.sunset.model.Weather
 import com.kennysexton.sunset.model.WeatherResponse
 import com.kennysexton.sunset.ui.theme.SunriseSunsetTheme
+import kotlin.math.roundToInt
 
 @Composable
 fun WeatherLandingScreen(innerPadding: PaddingValues, weatherList: List<WeatherResponse>) {
@@ -30,6 +32,9 @@ fun WeatherLandingScreen(innerPadding: PaddingValues, weatherList: List<WeatherR
                 modifier = Modifier.padding(innerPadding)
             )
         }
+    }
+    BlueButton(onClick = { /*TODO*/ }, modifier = Modifier.align(Alignment.BottomEnd).padding(innerPadding)) {
+        Text(text = "Add Location")
     }
 }
 
@@ -47,7 +52,7 @@ fun WeatherListItem(weather: WeatherResponse, modifier: Modifier = Modifier) {
             modifier = modifier
         )
         Text(
-            text = weather.main.temp.toString(),
+            text = "${weather.main.temp.roundToInt()}\u00B0",
             modifier = modifier
         )
         Box(
