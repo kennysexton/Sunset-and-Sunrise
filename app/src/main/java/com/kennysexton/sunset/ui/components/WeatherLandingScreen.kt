@@ -28,7 +28,7 @@ import kotlin.math.roundToInt
 fun WeatherLandingScreen(
     innerPadding: PaddingValues,
     weatherList: List<WeatherResponse>,
-    vm: WeatherLandingVM
+    onAddLocationClicked: () -> Unit
 ) {
     Box(
         modifier = Modifier
@@ -45,7 +45,7 @@ fun WeatherLandingScreen(
         }
 
         BlueButton(
-            onClick = { vm.onAddLocationClicked() },
+            onClick = onAddLocationClicked,
             modifier = Modifier
                 .padding(innerPadding)
                 .align(Alignment.BottomEnd)

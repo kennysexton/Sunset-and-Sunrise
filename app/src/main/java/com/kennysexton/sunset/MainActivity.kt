@@ -26,6 +26,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        // TODO: Move this out of mainactivity
         val weatherList = weatherLandingVM.getWeatherData()
 
         setContent {
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable<WeatherLanding> {
-                            WeatherLandingScreen(innerPadding, weatherList, weatherLandingVM)
+                            WeatherLandingScreen(innerPadding, weatherList, onAddLocationClicked = {navController.navigate(LocationSearch)})
                         }
                         composable<LocationSearch> {
                             LocationSearch(innerPadding)
