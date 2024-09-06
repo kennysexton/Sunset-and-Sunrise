@@ -12,25 +12,24 @@ import com.kennysexton.sunset.ui.theme.SunriseSunsetTheme
 import com.kennysexton.sunset.ui.components.WeatherLandingScreen
 
 class MainActivity : ComponentActivity() {
-    private val mainViewModel by viewModels<MainViewModel>()
+    private val weatherLandingVM by viewModels<WeatherLandingVM>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val weatherList = mainViewModel.getWeatherData()
+        val weatherList = weatherLandingVM.getWeatherData()
 
         setContent {
             SunriseSunsetTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    WeatherLandingScreen(innerPadding, weatherList)
+                    WeatherLandingScreen(innerPadding, weatherList, weatherLandingVM)
                 }
             }
         }
     }
 }
-
 
 
 //const val weatherIconPath = "https://openweathermap.org/img/wn/"

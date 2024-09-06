@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.kennysexton.sunset.WeatherLandingVM
 import com.kennysexton.sunset.model.Coord
 import com.kennysexton.sunset.model.Main
 import com.kennysexton.sunset.model.Weather
@@ -24,12 +25,18 @@ import com.kennysexton.sunset.ui.theme.SunriseSunsetTheme
 import kotlin.math.roundToInt
 
 @Composable
-fun WeatherLandingScreen(innerPadding: PaddingValues, weatherList: List<WeatherResponse>) {
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .padding(innerPadding))
+fun WeatherLandingScreen(
+    innerPadding: PaddingValues,
+    weatherList: List<WeatherResponse>,
+    vm: WeatherLandingVM
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(innerPadding)
+    )
     {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
+        LazyColumn() {
             items(weatherList) { location ->
                 WeatherListItem(
                     weather = location,
@@ -38,7 +45,7 @@ fun WeatherLandingScreen(innerPadding: PaddingValues, weatherList: List<WeatherR
         }
 
         BlueButton(
-            onClick = { /*TODO*/ },
+            onClick = { vm.onAddLocationClicked() },
             modifier = Modifier
                 .padding(innerPadding)
                 .align(Alignment.BottomEnd)
@@ -83,7 +90,7 @@ fun WeatherListItem(weather: WeatherResponse, modifier: Modifier = Modifier) {
 @Preview(showBackground = true)
 @Composable
 fun WeatherListItemPreview() {
-    val sampleWeatherList = listOf(
+    val sampleWeatherItem =
         WeatherResponse(
             coord = Coord("39.9523", "-75.1638"),
             name = "Philadelphia",
@@ -97,8 +104,8 @@ fun WeatherListItemPreview() {
             ),
             weather = listOf(Weather(description = "broken clouds", icon = "04d"))
         )
-    )
+
     SunriseSunsetTheme {
-        WeatherLandingScreen(innerPadding = PaddingValues(), sampleWeatherList)
+        WeatherListItem(sampleWeatherItem)
     }
 }

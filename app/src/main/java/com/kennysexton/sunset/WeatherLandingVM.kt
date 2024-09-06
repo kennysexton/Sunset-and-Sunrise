@@ -8,7 +8,7 @@ import com.kennysexton.sunset.model.WeatherResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class WeatherLandingVM : ViewModel() {
 
     private val weatherResponseList: ArrayList<WeatherResponse> = ArrayList()
 
@@ -32,6 +32,10 @@ class MainViewModel : ViewModel() {
             }
         }
         return weatherResponseList
+    }
+
+    fun onAddLocationClicked() {
+
     }
 
 }
