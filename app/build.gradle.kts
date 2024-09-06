@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlinx.serialization.json)
 }
 
 val OPEN_WEATHER_KEY: String by project
@@ -73,8 +74,12 @@ dependencies {
 
     // Retrofit
     implementation(libs.retrofit)
-    implementation (libs.gson)
+    implementation(libs.gson)
 
     // Coil
     implementation(libs.coil)
+
+    // Compose Navigation (with serialization)
+    implementation(libs.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
 }

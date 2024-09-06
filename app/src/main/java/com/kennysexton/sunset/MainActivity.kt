@@ -6,8 +6,15 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.kennysexton.sunset.navigation.LocationSearch
+import com.kennysexton.sunset.navigation.WeatherLanding
+import com.kennysexton.sunset.ui.components.LocationSearch
 import com.kennysexton.sunset.ui.theme.SunriseSunsetTheme
 import com.kennysexton.sunset.ui.components.WeatherLandingScreen
 
@@ -23,14 +30,29 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             SunriseSunsetTheme {
+                val navController = rememberNavController()
+
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    WeatherLandingScreen(innerPadding, weatherList, weatherLandingVM)
+
+                    NavHost(
+                        navController = navController,
+                        startDestination = WeatherLanding,
+                        modifier = Modifier.padding(innerPadding)
+                    ) {
+                        composable<WeatherLanding> {
+                            WeatherLandingScreen(innerPadding, weatherList, weatherLandingVM)
+                        }
+                        composable<LocationSearch> {
+                            LocationSearch(innerPadding)
+                        }
+                    }
+
+
                 }
             }
         }
     }
 }
-
 
 //const val weatherIconPath = "https://openweathermap.org/img/wn/"
 //const val weatherIconEnding = "@2x.png"
