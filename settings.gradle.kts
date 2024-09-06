@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Sunrise & Sunset"
+rootProject.name = "Sunset & Sunrise"
 include(":app")
  
