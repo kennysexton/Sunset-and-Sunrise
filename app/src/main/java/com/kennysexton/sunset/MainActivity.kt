@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -14,41 +13,36 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.kennysexton.sunset.navigation.LocationSearch
 import com.kennysexton.sunset.navigation.WeatherLanding
-import com.kennysexton.sunset.ui.components.LocationSearch
+import com.kennysexton.sunset.search.LocationSearchUI
 import com.kennysexton.sunset.ui.theme.SunriseSunsetTheme
 import com.kennysexton.sunset.ui.components.WeatherLandingScreen
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val weatherLandingVM by viewModels<WeatherLandingVM>()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-        // TODO: Move this out of mainactivity
-        val weatherList = weatherLandingVM.getWeatherData()
-
         setContent {
             SunriseSunsetTheme {
                 val navController = rememberNavController()
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
                     NavHost(
                         navController = navController,
                         startDestination = WeatherLanding,
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable<WeatherLanding> {
-                            WeatherLandingScreen(innerPadding, weatherList, onAddLocationClicked = {navController.navigate(LocationSearch)})
+                            WeatherLandingScreen(
+                                innerPadding,
+                                onAddLocationClicked = { navController.navigate(LocationSearch) })
                         }
                         composable<LocationSearch> {
-                            LocationSearch(innerPadding)
+                            LocationSearchUI(innerPadding)
                         }
                     }
-
-
                 }
             }
         }

@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlinx.serialization.json)
+    alias(libs.plugins.hilt.android)
 }
 
 val OPEN_WEATHER_KEY: String by project
@@ -82,4 +84,14 @@ dependencies {
     // Compose Navigation (with serialization)
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+
+    // Hilt
+    implementation(libs.hilt)
+    implementation(libs.hilt.navigation)
+    kapt(libs.kapt)
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }
