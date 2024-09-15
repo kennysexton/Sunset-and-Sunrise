@@ -1,4 +1,4 @@
-package com.kennysexton.sunset.ui.components
+package com.kennysexton.sunset.weatherlist
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,11 +19,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.kennysexton.sunset.WeatherLandingVM
 import com.kennysexton.sunset.model.Coord
 import com.kennysexton.sunset.model.Main
 import com.kennysexton.sunset.model.Weather
 import com.kennysexton.sunset.model.WeatherResponse
+import com.kennysexton.sunset.ui.components.BlueButton
 import com.kennysexton.sunset.ui.theme.SunriseSunsetTheme
 import kotlin.math.roundToInt
 

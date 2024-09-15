@@ -1,9 +1,10 @@
-package com.kennysexton.sunset
+package com.kennysexton.sunset.weatherlist
 
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kennysexton.sunset.BuildConfig
 import com.kennysexton.sunset.model.OpenWeatherInterface
 import com.kennysexton.sunset.model.WeatherResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
