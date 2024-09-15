@@ -28,7 +28,7 @@ import com.kennysexton.sunset.ui.theme.SunriseSunsetTheme
 import kotlin.math.roundToInt
 
 @Composable
-fun WeatherLandingScreen(
+fun WeatherLandingUI(
     innerPadding: PaddingValues,
     onAddLocationClicked: () -> Unit
 ) {
@@ -58,7 +58,6 @@ fun WeatherLandingScreen(
         ) {
             Text(text = "Add Location")
         }
-
 
     }
 }
