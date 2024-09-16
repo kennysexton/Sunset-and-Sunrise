@@ -18,7 +18,7 @@ import androidx.navigation.compose.rememberNavController
 import com.kennysexton.sunset.navigation.LocationSearch
 import com.kennysexton.sunset.navigation.WeatherLanding
 import com.kennysexton.sunset.search.LocationSearchUI
-import com.kennysexton.sunset.ui.components.SettingsDialog
+import com.kennysexton.sunset.settings.SettingsDialog
 import com.kennysexton.sunset.ui.components.TitleBar
 import com.kennysexton.sunset.ui.theme.SunriseSunsetTheme
 import com.kennysexton.sunset.weatherlist.WeatherLandingUI

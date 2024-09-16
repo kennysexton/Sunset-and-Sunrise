@@ -24,5 +24,4 @@ class SearchVM @Inject constructor(
         return { it -> _searchQuery.value = it}
     }
 
-
 }

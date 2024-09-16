@@ -89,6 +89,9 @@ dependencies {
     implementation(libs.hilt)
     implementation(libs.hilt.navigation)
     kapt(libs.kapt)
+    
+    //DataStore
+    implementation(libs.dataStore)
 }
 
 // Allow references to generated code
