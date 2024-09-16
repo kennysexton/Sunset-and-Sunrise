@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kennysexton.sunset.model.Units
-import com.kennysexton.sunset.search.SearchVM
 
 @Composable
 fun SettingsDialog(onDismiss: () -> Unit) {

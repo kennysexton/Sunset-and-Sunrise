@@ -17,7 +17,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsVM @Inject constructor(
-    private val appContext: Context,
     private val dataStore: DataStore<androidx.datastore.preferences.core.Preferences>
 ) : ViewModel() {
 
