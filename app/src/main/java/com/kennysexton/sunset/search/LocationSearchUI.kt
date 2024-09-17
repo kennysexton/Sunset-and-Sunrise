@@ -20,13 +20,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LocationSearchUI(innerPadding: PaddingValues) {
+fun LocationSearchUI() {
     val vm = hiltViewModel<SearchVM>()
 
     val searchQuery by vm.searchQuery.collectAsState()
 
 
-    Column(modifier = Modifier.padding(innerPadding)) {
+    Column() {
         Spacer(Modifier.weight(1f))
 
         SearchBar(

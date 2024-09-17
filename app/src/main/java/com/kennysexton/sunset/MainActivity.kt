@@ -51,11 +51,10 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable<WeatherLanding> {
                             WeatherLandingUI(
-                                innerPadding,
                                 onAddLocationClicked = { navController.navigate(LocationSearch) })
                         }
                         composable<LocationSearch> {
-                            LocationSearchUI(innerPadding)
+                            LocationSearchUI()
                         }
                     }
                 }
