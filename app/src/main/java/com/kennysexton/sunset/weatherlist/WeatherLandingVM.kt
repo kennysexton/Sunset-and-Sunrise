@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WeatherLandingVM @Inject constructor(
-    private val applicationContext: Context
+    private val applicationContext: Context,
 ) : ViewModel() {
 
     private val _weatherResponseList = MutableStateFlow<List<WeatherResponse>>(emptyList())

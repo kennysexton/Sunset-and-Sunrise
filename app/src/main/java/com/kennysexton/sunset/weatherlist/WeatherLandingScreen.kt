@@ -32,9 +32,9 @@ fun WeatherLandingUI(
     innerPadding: PaddingValues,
     onAddLocationClicked: () -> Unit
 ) {
-    val vm = hiltViewModel<WeatherLandingVM>()
+    val weatherVM = hiltViewModel<WeatherLandingVM>()
 
-    val weatherList by vm.weatherResponseList.collectAsState()
+    val weatherList by weatherVM.weatherResponseList.collectAsState()
 
     Box(
         modifier = Modifier
