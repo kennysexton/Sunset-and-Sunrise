@@ -74,9 +74,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // Retrofit
+    // Retrofit & OkHttp
     implementation(libs.retrofit)
     implementation(libs.gson)
+    implementation(libs.okhttp)
 
     // Coil
     implementation(libs.coil)
