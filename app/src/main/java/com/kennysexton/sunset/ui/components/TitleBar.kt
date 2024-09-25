@@ -17,7 +17,11 @@ import com.kennysexton.sunset.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TitleBar(navHostController: NavHostController, onSettingsButtonClicked: () -> Unit) {
+fun TitleBar(
+    showBackButton: Boolean,
+    onBackButtonClicked: () -> Unit,
+    onSettingsButtonClicked: () -> Unit
+) {
 
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
@@ -28,15 +32,14 @@ fun TitleBar(navHostController: NavHostController, onSettingsButtonClicked: () -
             Text(stringResource(R.string.app_name))
         },
         navigationIcon = {
-            // TODO limit when the the user can go back?
-//            if (currentBackStackEntry.currentDestination?. != WeatherLanding) {
-            IconButton(onClick = { navHostController.navigateUp() }) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
-                    contentDescription = "Back"
-                )
+            if (showBackButton) {
+                IconButton(onClick = { onBackButtonClicked() }) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                        contentDescription = "Back"
+                    )
+                }
             }
-//            }
         },
 
         actions = {

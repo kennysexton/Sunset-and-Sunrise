@@ -1,5 +1,6 @@
 package com.kennysexton.sunset.weatherlist
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -12,6 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,27 +28,34 @@ import com.kennysexton.sunset.model.Weather
 import com.kennysexton.sunset.model.WeatherResponse
 import com.kennysexton.sunset.ui.components.BlueButton
 import com.kennysexton.sunset.ui.theme.SunriseSunsetTheme
+import com.kennysexton.sunset.weatherDetails.WeatherDetailsUI
 import kotlin.math.roundToInt
 
 @Composable
 fun WeatherLandingUI(
-
     onAddLocationClicked: () -> Unit
 ) {
     val weatherVM = hiltViewModel<WeatherLandingVM>()
 
     val weatherList by weatherVM.weatherResponseList.collectAsState()
+    var selectedCity by rememberSaveable { mutableStateOf<WeatherResponse?>(null) }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
     )
     {
-        LazyColumn() {
-            items(weatherList) { location ->
-                WeatherListItem(
-                    weather = location,
-                )
+        //TODO: add backstack functionality
+        if (selectedCity != null) {
+            WeatherDetailsUI(weather = selectedCity)
+        } else {
+            LazyColumn {
+                items(weatherList) { location ->
+                    WeatherListItem(
+                        weather = location,
+                        onRowClicked = { selectedCity = it }
+                    )
+                }
             }
         }
 
@@ -60,11 +71,18 @@ fun WeatherLandingUI(
 }
 
 @Composable
-fun WeatherListItem(weather: WeatherResponse, modifier: Modifier = Modifier) {
+fun WeatherListItem(
+    weather: WeatherResponse,
+    modifier: Modifier = Modifier,
+    onRowClicked: (WeatherResponse) -> Unit = {}
+) {
     Row(
         modifier = modifier
             .padding(18.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable {
+                onRowClicked(weather)
+            },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -72,6 +90,7 @@ fun WeatherListItem(weather: WeatherResponse, modifier: Modifier = Modifier) {
             text = weather.name,
             modifier = modifier
         )
+        //TODO, add unit symbol
         Text(
             text = "${weather.main.temp.roundToInt()}\u00B0",
             modifier = modifier

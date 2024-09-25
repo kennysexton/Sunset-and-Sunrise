@@ -31,6 +31,7 @@ class WeatherLandingVM @Inject constructor(
         getWeatherData()
     }
 
+    // TODO: consolidate read and write into one function call
     private suspend fun getUnits(): Units {
         var openWeatherUnits: Units = Units.FAHRENHEIT // default
         // Get Units
