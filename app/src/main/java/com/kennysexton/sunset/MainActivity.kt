@@ -20,7 +20,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.kennysexton.sunset.navigation.LocationSearch
-import com.kennysexton.sunset.navigation.WeatherDetails
 import com.kennysexton.sunset.navigation.WeatherLanding
 import com.kennysexton.sunset.search.LocationSearchUI
 import com.kennysexton.sunset.settings.SettingsDialog
@@ -44,6 +43,7 @@ class MainActivity : ComponentActivity() {
 
                 navController.currentDestination?.route
 
+                // TODO: move this out of the way
                 // navController doesn't fire on update. Instead we have to attach this listener
                 navController.addOnDestinationChangedListener { _, destination, arguments ->
                     // Handle destination changes here

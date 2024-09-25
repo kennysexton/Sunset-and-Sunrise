@@ -16,6 +16,7 @@ class SettingsVM @Inject constructor(
     private val dataStore: DataStoreManager
 ) : ViewModel() {
 
+    //TODO: MVI this baddie
     private val _currentUnits = MutableStateFlow(Units.FAHRENHEIT)
     val currentUnits = _currentUnits.asStateFlow()
 

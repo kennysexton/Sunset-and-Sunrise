@@ -15,6 +15,8 @@ fun WeatherDetailsUI(weather: WeatherResponse?) {
         Text(weather?.main?.feels_like.toString())
         Text(weather?.main?.temp_max.toString())
         Text(weather?.main?.temp_min.toString())
+        Text(weather?.coord?.lat.toString())
+        Text(weather?.coord?.lon.toString())
     }
 
 }

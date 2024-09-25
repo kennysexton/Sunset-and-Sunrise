@@ -22,8 +22,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.kennysexton.sunset.model.Coord
+import com.kennysexton.sunset.model.Coordinate
 import com.kennysexton.sunset.model.Main
+import com.kennysexton.sunset.model.Sys
 import com.kennysexton.sunset.model.Weather
 import com.kennysexton.sunset.model.WeatherResponse
 import com.kennysexton.sunset.ui.components.BlueButton
@@ -37,7 +38,7 @@ fun WeatherLandingUI(
 ) {
     val weatherVM = hiltViewModel<WeatherLandingVM>()
 
-    val weatherList by weatherVM.weatherResponseList.collectAsState()
+    val uiState by weatherVM.uiState.collectAsState()
     var selectedCity by rememberSaveable { mutableStateOf<WeatherResponse?>(null) }
 
     Box(
@@ -50,7 +51,7 @@ fun WeatherLandingUI(
             WeatherDetailsUI(weather = selectedCity)
         } else {
             LazyColumn {
-                items(weatherList) { location ->
+                items(uiState.weatherList) { location ->
                     WeatherListItem(
                         weather = location,
                         onRowClicked = { selectedCity = it }
@@ -113,7 +114,7 @@ fun WeatherListItem(
 fun WeatherListItemPreview() {
     val sampleWeatherItem =
         WeatherResponse(
-            coord = Coord("39.9523", "-75.1638"),
+            coord = Coordinate("39.9523", "-75.1638"),
             name = "Philadelphia",
             main = Main(
                 temp = 79.03f,
@@ -123,6 +124,9 @@ fun WeatherListItemPreview() {
                 pressure = 1028.0f,
                 humidity = 40.0f
             ),
+            dt = 1234,
+            timezone = -18000,
+            sys = Sys(country = "US", sunrise = 1234, sunset = 1234),
             weather = listOf(Weather(description = "broken clouds", icon = "04d"))
         )
 

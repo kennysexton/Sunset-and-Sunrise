@@ -8,13 +8,13 @@ import com.kennysexton.sunset.Constants.UNITS_KEY
 import com.kennysexton.sunset.di.DataStoreManager
 import com.kennysexton.sunset.model.OpenWeatherInterface
 import com.kennysexton.sunset.model.Units
-import com.kennysexton.sunset.model.WeatherResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,8 +24,8 @@ class WeatherLandingVM @Inject constructor(
     private val apiService: OpenWeatherInterface
 ) : ViewModel() {
 
-    private val _weatherResponseList = MutableStateFlow<List<WeatherResponse>>(emptyList())
-    val weatherResponseList: StateFlow<List<WeatherResponse>> = _weatherResponseList.asStateFlow()
+    private val _uiState = MutableStateFlow(WeatherLandingUiState())
+    val uiState: StateFlow<WeatherLandingUiState> = _uiState
 
     init {
         getWeatherData()
@@ -56,7 +56,8 @@ class WeatherLandingVM @Inject constructor(
 
             try {
                 if (response.isSuccessful) {
-                    response.body()?.let { _weatherResponseList.value = listOf(it) }
+                    response.body()
+                        ?.let { weatherResponse -> _uiState.update { it.copy(weatherList = listOf(weatherResponse)) } }
                 } else {
                     Log.e("Networking", "failed call to OpenWeatherAPI")
                 }
