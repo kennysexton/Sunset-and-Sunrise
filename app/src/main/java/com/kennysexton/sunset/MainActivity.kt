@@ -42,7 +42,9 @@ class MainActivity : ComponentActivity() {
                 var showBackButton by rememberSaveable { mutableStateOf(false) }
                 var showSettingsDialog by rememberSaveable { mutableStateOf(false) }
 
-                // NavController doesn't fire on update. Instead we have to attach this listener
+                navController.currentDestination?.route
+
+                // navController doesn't fire on update. Instead we have to attach this listener
                 navController.addOnDestinationChangedListener { _, destination, arguments ->
                     // Handle destination changes here
                     showBackButton = when (destination.route) {
