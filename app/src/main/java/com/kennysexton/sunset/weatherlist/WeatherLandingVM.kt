@@ -1,6 +1,5 @@
 package com.kennysexton.sunset.weatherlist
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,10 +11,10 @@ import com.kennysexton.sunset.model.Units
 import com.kennysexton.sunset.model.WeatherResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,31 +27,25 @@ class WeatherLandingVM @Inject constructor(
     private val _weatherResponseList = MutableStateFlow<List<WeatherResponse>>(emptyList())
     val weatherResponseList: StateFlow<List<WeatherResponse>> = _weatherResponseList.asStateFlow()
 
-    private val _currentUnits = MutableStateFlow(Units.FAHRENHEIT)
-    val currentUnits = _currentUnits.asStateFlow()
-
     init {
         getWeatherData()
     }
 
-    private fun getUnits(): Units {
+    private suspend fun getUnits(): Units {
         var openWeatherUnits: Units = Units.FAHRENHEIT // default
-        viewModelScope.launch {
-            // Get Units
-            dataStore.readStringDataStore(UNITS_KEY).collect { units ->
-                if (units != null) {
-                    openWeatherUnits = Units.valueOf(units)
-                }
+        // Get Units
+        dataStore.readStringDataStore(UNITS_KEY).first().let { units ->
+            if (units != null) {
+                println("units: $units")
+                openWeatherUnits = Units.valueOf(units)
             }
         }
         return openWeatherUnits
     }
 
     private fun getWeatherData() {
-
-
         viewModelScope.launch(Dispatchers.IO) {
-            val units = async { getUnits() }.await()
+            val units = getUnits()
 
             // Make API call
             val response = apiService.getCurrentWeather(
