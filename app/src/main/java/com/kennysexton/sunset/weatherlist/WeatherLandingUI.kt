@@ -35,7 +35,6 @@ import kotlin.math.roundToInt
 @Composable
 fun WeatherLandingUI(
     onAddLocationClicked: () -> Unit,
-    selectedCity: WeatherResponse?,
     onRowClicked: (WeatherResponse) -> Unit
 ) {
     val weatherVM = hiltViewModel<WeatherLandingVM>()
@@ -48,19 +47,15 @@ fun WeatherLandingUI(
             .fillMaxSize()
     )
     {
-        //TODO: add backstack functionality
-        if (selectedCity != null) {
-            WeatherDetailsUI(weather = selectedCity)
-        } else {
-            LazyColumn {
-                items(uiState.weatherList) { location ->
-                    WeatherListItem(
-                        weather = location,
-                        onRowClicked = { onRowClicked(it) }
-                    )
-                }
+        LazyColumn {
+            items(uiState.weatherList) { location ->
+                WeatherListItem(
+                    weather = location,
+                    onRowClicked = { onRowClicked(it) }
+                )
             }
         }
+
 
         BlueButton(
             onClick = onAddLocationClicked,

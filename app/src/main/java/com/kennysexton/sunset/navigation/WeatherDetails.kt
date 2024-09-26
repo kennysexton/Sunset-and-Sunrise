@@ -3,4 +3,6 @@ package com.kennysexton.sunset.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
-object WeatherLanding
+data class WeatherDetails(
+    val locationName: String? = null,
+)
