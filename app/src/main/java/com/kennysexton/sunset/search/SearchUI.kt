@@ -10,18 +10,23 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LocationSearchUI() {
+fun LocationSearchUI(
+    onSearch: (String) -> Unit
+) {
     val vm = hiltViewModel<SearchVM>()
 
-    val searchQuery by vm.searchQuery.collectAsState()
+//    val uiState by vm.uiState.collectAsState()
+    var searchQuery by rememberSaveable { mutableStateOf("") }
 
 
     Column() {
@@ -29,8 +34,10 @@ fun LocationSearchUI() {
 
         SearchBar(
             query = searchQuery,
-            onQueryChange = vm.onQueryChange(),
-            onSearch = vm.onSearch(),
+            onQueryChange = {
+                searchQuery = it
+            },
+            onSearch = { onSearch(it) },
             active = true,
             onActiveChange = {},
             placeholder = { Text(text = "Enter a city") },

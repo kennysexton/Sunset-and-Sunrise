@@ -19,6 +19,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.kennysexton.sunset.model.WeatherResponse
 import com.kennysexton.sunset.navigation.LocationSearch
 import com.kennysexton.sunset.navigation.WeatherLanding
 import com.kennysexton.sunset.search.LocationSearchUI
@@ -41,15 +42,16 @@ class MainActivity : ComponentActivity() {
                 var showBackButton by rememberSaveable { mutableStateOf(false) }
                 var showSettingsDialog by rememberSaveable { mutableStateOf(false) }
 
-                navController.currentDestination?.route
+                var selectedCity by rememberSaveable { mutableStateOf<WeatherResponse?>(null) }
 
-                // TODO: move this out of the way
+                // TODO: move this out of the way ( broken. I think it makes sense to move details to a full screen
                 // navController doesn't fire on update. Instead we have to attach this listener
                 navController.addOnDestinationChangedListener { _, destination, arguments ->
                     // Handle destination changes here
-                    showBackButton = when (destination.route) {
+                    showBackButton = when (destination.route?.let { trimQueryParameters(it) }) {
                         WeatherLanding::class.java.name -> {
-                            false
+                            // show back button if we currently are in the details view
+                            selectedCity != null
                         }
                         else -> {
                             true
@@ -61,22 +63,31 @@ class MainActivity : ComponentActivity() {
                     topBar = {
                         TitleBar(
                             showBackButton = showBackButton,
-                            onBackButtonClicked = { navController.navigateUp() },
+                            // Details screen is not a full navigation
+                            onBackButtonClicked = {
+                                if (selectedCity != null) selectedCity =
+                                    null else navController.navigateUp()
+                            },
                             onSettingsButtonClicked = { showSettingsDialog = true })
                     },
                     modifier = Modifier.fillMaxSize()
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = WeatherLanding,
+                        startDestination = WeatherLanding(searchQuery = null),
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable<WeatherLanding> {
                             WeatherLandingUI(
-                                onAddLocationClicked = { navController.navigate(LocationSearch) })
+                                onAddLocationClicked = { navController.navigate(LocationSearch) },
+                                selectedCity = selectedCity,
+                                onRowClicked = { selectedCity = it }
+                            )
                         }
                         composable<LocationSearch> {
-                            LocationSearchUI()
+                            LocationSearchUI(
+                                onSearch = { navController.navigate(WeatherLanding(searchQuery = it)) }
+                            )
                         }
                     }
                 }

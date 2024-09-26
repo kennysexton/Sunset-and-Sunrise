@@ -34,12 +34,14 @@ import kotlin.math.roundToInt
 
 @Composable
 fun WeatherLandingUI(
-    onAddLocationClicked: () -> Unit
+    onAddLocationClicked: () -> Unit,
+    selectedCity: WeatherResponse?,
+    onRowClicked: (WeatherResponse) -> Unit
 ) {
     val weatherVM = hiltViewModel<WeatherLandingVM>()
 
     val uiState by weatherVM.uiState.collectAsState()
-    var selectedCity by rememberSaveable { mutableStateOf<WeatherResponse?>(null) }
+
 
     Box(
         modifier = Modifier
@@ -54,7 +56,7 @@ fun WeatherLandingUI(
                 items(uiState.weatherList) { location ->
                     WeatherListItem(
                         weather = location,
-                        onRowClicked = { selectedCity = it }
+                        onRowClicked = { onRowClicked(it) }
                     )
                 }
             }

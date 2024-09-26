@@ -8,9 +8,10 @@ import retrofit2.http.Query
 
 interface OpenWeatherInterface {
 
-    @GET("weather?q=Philadelphia")
+    @GET("weather")
     suspend fun getCurrentWeather(
         @Query("appid") api_key: String,
+        @Query("q") location: String,
         @Query("units") units: String
     ): Response<WeatherResponse>
 
